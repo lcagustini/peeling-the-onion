@@ -12,7 +12,7 @@
                 margin: 0px;
             }
             .container {
-                height: calc(100% - 2em);
+                height: calc(100% - 3em);
             }
 
             .option {
@@ -31,7 +31,14 @@
 
     <body>
         <div class="container">
-            <div style="text-align: center;"><span id="score"></span><span>/</span><span id="total"></span></div>
+            <div style="text-align: center;">
+                <div>
+                    <span>Qual noticia eh verdadeira?</span>
+                </div>
+                <div>
+                    <span id="score"></span><span>/</span><span id="total"></span>
+                </div>
+            </div>
             <div id="left" style="float: left; background-color: red;" class="option" onclick="clickLeft()">
                 <div class="text"></div>
             </div>
@@ -87,34 +94,36 @@
 
             rand = generateRandomInteger(0, 1);
 
-            getJSON('https://www.reddit.com/r/theonion/.json',
+            //Truth
+            getJSON('surrealista.json',
                 function(err, data) {
                     if (err !== null) {
                         alert('Something went wrong: ' + err);
                     }
                     else {
-                        let random = generateRandomInteger(0, data.data.dist-1);
+                        let random = generateRandomInteger(0, data.length-1);
                         if (rand === 0) {
-                            document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title;
+                            document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
                         }
                         else {
-                            document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title;
+                            document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
                         }
                     }
                 });
 
-            getJSON('https://www.reddit.com/r/nottheonion/.json',
+            //Lie
+            getJSON('sensacionalista.json',
                 function(err, data) {
                     if (err !== null) {
                         alert('Something went wrong: ' + err);
                     }
                     else {
-                        let random = generateRandomInteger(0, data.data.dist-1);
+                        let random = generateRandomInteger(0, data.length-1);
                         if (rand === 0) {
-                            document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title;
+                            document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
                         }
                         else {
-                            document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title;
+                            document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
                         }
                     }
                 });
