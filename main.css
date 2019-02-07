@@ -35,3 +35,26 @@ html, body {
 	float: right; 
 	background-image: linear-gradient(to bottom left, rgba(0,0,255,0.3), rgba(0,0,255,1));
 }
+
+.lang-option {
+    text-align: center;
+    border: 3px solid black;
+    display: inline-block;
+    width: 100%;
+    margin-top:5px;
+    position: relative;
+    padding: 10px 0px;
+}
+
+.column {
+    width: 35%;
+    position: relative;
+    display: inline-block;
+}
+
+.content {
+    top:10%;
+    width: 30%;
+    position: relative;
+    display: inline-block;
+}
