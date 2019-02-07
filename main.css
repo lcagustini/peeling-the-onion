@@ -1,0 +1,37 @@
+html, body {
+    height: 100%;
+    margin: 0px;
+}
+.container {
+    height: calc(100% - 3em);
+}
+
+.option {
+    height: 100%;
+    width: 50%;
+}
+
+.text {
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: inline-block;
+    margin-top:40%;
+    margin-left:30%;
+    margin-right:30%;
+    padding:10px;
+}
+
+.title {
+	text-align: center;
+}
+
+.left-panel {
+	float: left; 
+	background-image: linear-gradient(to bottom right, rgba(255,0,0,0.3), rgba(255,0,0,1));
+}
+
+.right-panel {
+	float: right; 
+	background-image: linear-gradient(to bottom left, rgba(0,0,255,0.3), rgba(0,0,255,1));
+}
