@@ -94,7 +94,7 @@
 
             rand = generateRandomInteger(0, 1);
 
-            getJSON('https://www.reddit.com/r/theonion/.json',
+            getJSON('https://www.reddit.com/r/nottheonion/.json',
                 function(err, data) {
                     if (err !== null) {
                         alert('Something went wrong: ' + err);
@@ -110,7 +110,7 @@
                     }
                 });
 
-            getJSON('https://www.reddit.com/r/nottheonion/.json',
+            getJSON('https://www.reddit.com/r/theonion/.json',
                 function(err, data) {
                     if (err !== null) {
                         alert('Something went wrong: ' + err);
