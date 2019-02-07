@@ -51,7 +51,7 @@
         <div class="container">
             <div class="title">
                 <div>
-                    <span>Qual notícia é verdadeira?</span>
+                    <span id="title-text">Qual notícia é verdadeira?</span>
                 </div>
                 <div>
                     <span id="score"></span><span>/</span><span id="total"></span>
@@ -87,6 +87,22 @@
             return Math.floor(min + Math.random()*(max + 1 - min))
         }
 
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        let urlVars = getUrlVars();
+        if (urlVars["lang"] === "en") {
+            document.getElementById("modal-fake-news").innerHTML = "Untrue news from The Onion";
+            document.getElementById("modal-true-news").innerHTML = "Real news from r/nottheonion";
+            document.getElementsByClassName("close")[0].innerHTML = "Next";
+            document.getElementById("title-text").innerHTML = "Which news is real?";
+        }
+
         var getJSON = function(url, callback) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
@@ -105,10 +121,14 @@
         var clickLeft = function() {
             if (rand === 0) {
                 score += 1;
-                document.getElementById("modal-text").innerHTML = "Acertou! Essa é verdade mesmo!"
+                document.getElementById("modal-text").innerHTML = urlVars["lang"] === "br" ?
+                                                                    "Acertou! Essa é verdade mesmo!" :
+                                                                    "That's right! This is the correct one!";
             }
             else {
-                document.getElementById("modal-text").innerHTML = "Olha a cobraa! É mentira!"
+                document.getElementById("modal-text").innerHTML = urlVars["lang"] === "br" ?
+                                                                    "Olha a cobraa! É mentira!" :
+                                                                    "Nope, this is one is an onion.";
             }
             total += 1;
 
@@ -118,10 +138,14 @@
         var clickRight = function() {
             if (rand === 1) {
                 score += 1;
-                document.getElementById("modal-text").innerHTML = "Acertou! Essa é verdade mesmo!"
+                document.getElementById("modal-text").innerHTML = urlVars["lang"] === "br" ?
+                                                                    "Acertou! Essa é verdade mesmo!" :
+                                                                    "That's right! This is the correct one!";
             }
             else {
-                document.getElementById("modal-text").innerHTML = "Olha a cobraa! É mentira!"
+                document.getElementById("modal-text").innerHTML = urlVars["lang"] === "br" ?
+                                                                    "Olha a cobraa! É mentira!" :
+                                                                    "Nope, this is one is an onion.";
             }
             total += 1;
 
@@ -135,39 +159,63 @@
             rand = generateRandomInteger(0, 1);
 
             //Truth
-            getJSON("surrealista.json",
+            getJSON(urlVars["lang"] === "br" ? "surrealista.json" : "https://www.reddit.com/r/nottheonion/.json",
                 function(err, data) {
                     if (err !== null) {
                         alert("Something went wrong: " + err);
                     }
                     else {
-                        let random = generateRandomInteger(0, data.length-1);
+                        let random = urlVars["lang"] === "br" ? generateRandomInteger(0, data.length-1) : generateRandomInteger(0, data.data.dist-1);
 
-                        document.getElementById("modal-true-news").href = data[random].link;
+                        if (urlVars["lang"] === "br") {
+                            document.getElementById("modal-true-news").href = data[random].link;
+                        }
                         if (rand === 0) {
-                            document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            if (urlVars["lang"] === "br") {
+                                document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            }
+                            else {
+                                document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                            }
                         }
                         else {
-                            document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            if (urlVars["lang"] === "br") {
+                                document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            }
+                            else {
+                                document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                            }
                         }
                     }
                 });
 
             //Lie
-            getJSON("sensacionalista.json",
+            getJSON(urlVars["lang"] === "br" ? "sensacionalista.json" : "https://www.reddit.com/r/theonion/.json",
                 function(err, data) {
                     if (err !== null) {
                         alert("Something went wrong: " + err);
                     }
                     else {
-                        let random = generateRandomInteger(0, data.length-1);
+                        let random = urlVars["lang"] === "br" ? generateRandomInteger(0, data.length-1) : generateRandomInteger(0, data.data.dist-1);
 
-                        document.getElementById("modal-fake-news").href = data[random].link;
+                        if (urlVars["lang"] === "br") {
+                            document.getElementById("modal-fake-news").href = data[random].link;
+                        }
                         if (rand === 0) {
-                            document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            if (urlVars["lang"] === "br") {
+                                document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            }
+                            else {
+                                document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                            }
                         }
                         else {
-                            document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            if (urlVars["lang"] === "br") {
+                                document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            }
+                            else {
+                                document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                            }
                         }
                     }
                 });
