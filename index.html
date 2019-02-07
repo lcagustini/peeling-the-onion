@@ -103,10 +103,10 @@
                     else {
                         let random = generateRandomInteger(0, data.length-1);
                         if (rand === 0) {
-                            document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase().replace("(vídeo)", "");
                         }
                         else {
-                            document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
+                            document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase().replace("(vídeo)", "");
                         }
                     }
                 });
