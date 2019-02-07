@@ -54,7 +54,7 @@
                     <span id="title-text">Qual notícia é verdadeira?</span>
                 </div>
                 <div>
-                    Acertos:<span id="score"></span><span> / </span>Rodadas:<span id="total"></span>
+                    <span id="correct-text">Acertos:</span><span id="score"></span><span> / </span><span id="turns-text">Rodadas:</span><span id="total"></span>
                 </div>
             </div>
             <div id="left" class="option left-panel" onclick="clickLeft()">
@@ -101,6 +101,8 @@
             document.getElementById("modal-true-news").innerHTML = "Real news from r/nottheonion";
             document.getElementsByClassName("close")[0].innerHTML = "Next";
             document.getElementById("title-text").innerHTML = "Which news is real?";
+            document.getElementById("correct-text").innerHTML = "Corrects:";
+            document.getElementById("turns-text").innerHTML = "Turn:";
         }
 
         var getJSON = function(url, callback) {
