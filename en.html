@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <title>Peeling The Onion</title>
+        <link rel="shortcut icon" href="/logo.png">
+
+        <style type="text/css">
+            html, body {
+                height: 100%;
+                margin: 0px;
+            }
+            .container {
+                height: calc(100% - 3em);
+            }
+
+            .option {
+                height: 100%;
+                width: 50%;
+            }
+
+            .text {
+                color: white;
+                text-align: center;
+                position: relative;
+                top: 50%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div style="text-align: center;">
+                <div>
+                    <span>Which news is real?</span>
+                </div>
+                <div>
+                    <span id="score"></span><span>/</span><span id="total"></span>
+                </div>
+            </div>
+            <div id="left" style="float: left; background-color: red;" class="option" onclick="clickLeft()">
+                <div class="text"></div>
+            </div>
+            <div id="right" style="float: right; background-color: blue;" class="option" onclick="clickRight()">
+                <div class="text"></div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        let rand = 0;
+        let score = 0;
+        let total = 0;
+
+        function generateRandomInteger(min, max) {
+            return Math.floor(min + Math.random()*(max + 1 - min))
+        }
+
+        var getJSON = function(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function() {
+                var status = xhr.status;
+                if (status === 200) {
+                    callback(null, xhr.response);
+                } else {
+                    callback(status, xhr.response);
+                }
+            };
+            xhr.send();
+        };
+
+        var clickLeft = function() {
+            if (rand === 0) {
+                score += 1;
+            }
+            total += 1;
+            nextPair();
+        }
+
+        var clickRight = function() {
+            if (rand === 1) {
+                score += 1;
+            }
+            total += 1;
+            nextPair();
+        }
+
+        function nextPair() {
+            document.getElementById("score").innerHTML = score.toString();
+            document.getElementById("total").innerHTML = total.toString();
+
+            rand = generateRandomInteger(0, 1);
+
+            getJSON('https://www.reddit.com/r/theonion/.json',
+                function(err, data) {
+                    if (err !== null) {
+                        alert('Something went wrong: ' + err);
+                    }
+                    else {
+                        let random = generateRandomInteger(0, data.data.dist-1);
+                        if (rand === 0) {
+                            document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                        }
+                        else {
+                            document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                        }
+                    }
+                });
+
+            getJSON('https://www.reddit.com/r/nottheonion/.json',
+                function(err, data) {
+                    if (err !== null) {
+                        alert('Something went wrong: ' + err);
+                    }
+                    else {
+                        let random = generateRandomInteger(0, data.data.dist-1);
+                        if (rand === 0) {
+                            document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                        }
+                        else {
+                            document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
+                        }
+                    }
+                });
+        }
+
+        nextPair();
+    </script>
+</html>
+
