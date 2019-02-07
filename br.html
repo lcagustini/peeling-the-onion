@@ -5,44 +5,23 @@
 
         <title>Peeling The Onion</title>
         <link rel="shortcut icon" href="/logo.png">
-
-        <style type="text/css">
-            html, body {
-                height: 100%;
-                margin: 0px;
-            }
-            .container {
-                height: calc(100% - 3em);
-            }
-
-            .option {
-                height: 100%;
-                width: 50%;
-            }
-
-            .text {
-                color: white;
-                text-align: center;
-                position: relative;
-                top: 50%;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="main.css">
     </head>
 
     <body>
         <div class="container">
-            <div style="text-align: center;">
+            <div class="title">
                 <div>
-                    <span>Qual noticia eh verdadeira?</span>
+                    <span>Qual notícia é verdadeira?</span>
                 </div>
                 <div>
                     <span id="score"></span><span>/</span><span id="total"></span>
                 </div>
             </div>
-            <div id="left" style="float: left; background-color: red;" class="option" onclick="clickLeft()">
+            <div id="left" class="option left-panel" onclick="clickLeft()">
                 <div class="text"></div>
             </div>
-            <div id="right" style="float: right; background-color: blue;" class="option" onclick="clickRight()">
+            <div id="right" class="option right-panel" onclick="clickRight()">
                 <div class="text"></div>
             </div>
         </div>

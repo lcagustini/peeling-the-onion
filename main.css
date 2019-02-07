@@ -1,0 +1,33 @@
+html, body {
+    height: 100%;
+    margin: 0px;
+}
+.container {
+    height: calc(100% - 3em);
+}
+
+.option {
+    height: 100%;
+    width: 50%;
+}
+
+.text {
+    color: white;
+    text-align: center;
+    position: relative;
+    top: 50%;
+}
+
+.title {
+	text-align: center;
+}
+
+.left-panel {
+	float: left; 
+	background-color: red;
+}
+
+.right-panel {
+	float: right; 
+	background-color: blue;
+}
