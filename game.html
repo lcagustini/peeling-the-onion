@@ -172,6 +172,10 @@
                         if (urlVars["lang"] === "br") {
                             document.getElementById("modal-true-news").href = data[random].link;
                         }
+                        else {
+                            document.getElementById("modal-true-news").href = data.data.children[random].data.url;
+                        }
+
                         if (rand === 0) {
                             if (urlVars["lang"] === "br") {
                                 document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
@@ -203,6 +207,10 @@
                         if (urlVars["lang"] === "br") {
                             document.getElementById("modal-fake-news").href = data[random].link;
                         }
+                        else {
+                            document.getElementById("modal-fake-news").href = data.data.children[random].data.url;
+                        }
+
                         if (rand === 0) {
                             if (urlVars["lang"] === "br") {
                                 document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
