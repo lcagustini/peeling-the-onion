@@ -121,6 +121,37 @@
             xhr.send();
         };
 
+        let truthJSON = null;
+        let fakeJSON = null;
+
+        getJSON(urlVars["lang"] === "br" ? "surrealista.json" : "https://www.reddit.com/r/nottheonion/.json",
+            function(err, data) {
+                if (err !== null) {
+                    alert("Something went wrong: " + err);
+                }
+                else {
+                    truthJSON = data;
+
+                    if (fakeJSON != null) {
+                        nextPair();
+                    }
+                }
+            });
+
+        getJSON(urlVars["lang"] === "br" ? "sensacionalista.json" : "https://www.reddit.com/r/theonion/.json",
+            function(err, data) {
+                if (err !== null) {
+                    alert("Something went wrong: " + err);
+                }
+                else {
+                    fakeJSON = data;
+
+                    if (truthJSON != null) {
+                        nextPair();
+                    }
+                }
+            });
+
         var clickLeft = function() {
             if (rand === 0) {
                 score += 1;
@@ -162,66 +193,58 @@
             rand = generateRandomInteger(0, 1);
 
             //Truth
-            getJSON(urlVars["lang"] === "br" ? "surrealista.json" : "https://www.reddit.com/r/nottheonion/.json",
-                function(err, data) {
-                    if (err !== null) {
-                        alert("Something went wrong: " + err);
-                    }
-                    else {
-                        let random = urlVars["lang"] === "br" ? generateRandomInteger(0, data.length-1) : generateRandomInteger(0, data.data.dist-1);
+            let random = urlVars["lang"] === "br" ? generateRandomInteger(0, truthJSON.length-1) : generateRandomInteger(0, truthJSON.data.dist-1);
 
-                        if (urlVars["lang"] === "br") {
-                            document.getElementById("modal-true-news").href = data[random].link;
-                        }
-                        if (rand === 0) {
-                            if (urlVars["lang"] === "br") {
-                                document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
-                            }
-                            else {
-                                document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
-                            }
-                        }
-                        else {
-                            if (urlVars["lang"] === "br") {
-                                document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
-                            }
-                            else {
-                                document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
-                            }
-                        }
-                    }
-                });
+            if (urlVars["lang"] === "br") {
+                document.getElementById("modal-true-news").href = truthJSON[random].link;
+            }
+            else {
+                document.getElementById("modal-true-news").href = truthJSON.data.children[random].data.url;
+            }
+
+            if (rand === 0) {
+                if (urlVars["lang"] === "br") {
+                    document.getElementById("left").firstElementChild.innerHTML = truthJSON[random].title.toLowerCase();
+                }
+                else {
+                    document.getElementById("left").firstElementChild.innerHTML = truthJSON.data.children[random].data.title.toLowerCase();
+                }
+            }
+            else {
+                if (urlVars["lang"] === "br") {
+                    document.getElementById("right").firstElementChild.innerHTML = truthJSON[random].title.toLowerCase();
+                }
+                else {
+                    document.getElementById("right").firstElementChild.innerHTML = truthJSON.data.children[random].data.title.toLowerCase();
+                }
+            }
 
             //Lie
-            getJSON(urlVars["lang"] === "br" ? "sensacionalista.json" : "https://www.reddit.com/r/theonion/.json",
-                function(err, data) {
-                    if (err !== null) {
-                        alert("Something went wrong: " + err);
-                    }
-                    else {
-                        let random = urlVars["lang"] === "br" ? generateRandomInteger(0, data.length-1) : generateRandomInteger(0, data.data.dist-1);
+            random = urlVars["lang"] === "br" ? generateRandomInteger(0, fakeJSON.length-1) : generateRandomInteger(0, fakeJSON.data.dist-1);
 
-                        if (urlVars["lang"] === "br") {
-                            document.getElementById("modal-fake-news").href = data[random].link;
-                        }
-                        if (rand === 0) {
-                            if (urlVars["lang"] === "br") {
-                                document.getElementById("right").firstElementChild.innerHTML = data[random].title.toLowerCase();
-                            }
-                            else {
-                                document.getElementById("right").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
-                            }
-                        }
-                        else {
-                            if (urlVars["lang"] === "br") {
-                                document.getElementById("left").firstElementChild.innerHTML = data[random].title.toLowerCase();
-                            }
-                            else {
-                                document.getElementById("left").firstElementChild.innerHTML = data.data.children[random].data.title.toLowerCase();
-                            }
-                        }
-                    }
-                });
+            if (urlVars["lang"] === "br") {
+                document.getElementById("modal-fake-news").href = fakeJSON[random].link;
+            }
+            else {
+                document.getElementById("modal-fake-news").href = fakeJSON.data.children[random].data.url;
+            }
+
+            if (rand === 0) {
+                if (urlVars["lang"] === "br") {
+                    document.getElementById("right").firstElementChild.innerHTML = fakeJSON[random].title.toLowerCase();
+                }
+                else {
+                    document.getElementById("right").firstElementChild.innerHTML = fakeJSON.data.children[random].data.title.toLowerCase();
+                }
+            }
+            else {
+                if (urlVars["lang"] === "br") {
+                    document.getElementById("left").firstElementChild.innerHTML = fakeJSON[random].title.toLowerCase();
+                }
+                else {
+                    document.getElementById("left").firstElementChild.innerHTML = fakeJSON.data.children[random].data.title.toLowerCase();
+                }
+            }
         }
 
         span.onclick = function() {
@@ -237,7 +260,5 @@
                 nextPair();
             }
         }
-
-        nextPair();
     </script>
 </html>
