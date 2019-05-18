@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     margin: 0px;
+    font-family: 'Lato';
 }
 .container {
     height: calc(100% - 3em);
@@ -9,17 +10,18 @@ html, body {
 .option {
     height: 100%;
     width: 50%;
+    border-radius: 31px;
 }
 
 .text {
     color: white;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.4);
-    display: inline-block;
-    margin-top:40%;
-    margin-left:30%;
-    margin-right:30%;
+    display: block;
+    margin:40% auto;
     padding:10px;
+    border-radius: 31px;
+    max-width: 300px;
 }
 
 .title {
@@ -28,7 +30,7 @@ html, body {
 
 .left-panel {
 	float: left; 
-	background-image: linear-gradient(to bottom right, rgba(255,0,0,0.3), rgba(255,0,0,1));
+	background-image: linear-gradient(to bottom right, rgba(255,255,0,0.3), rgba(255,255,0,1));
 }
 
 .right-panel {
